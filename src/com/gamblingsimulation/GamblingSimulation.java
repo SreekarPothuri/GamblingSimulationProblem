@@ -8,6 +8,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Random;
+import java.util.Scanner;
 import java.util.Set;
 
 public class GamblingSimulation {
@@ -21,15 +22,16 @@ public class GamblingSimulation {
 	public int totalAmountEarned = 0;
 	public int LostDays=0,WonDays=0;
 	
-	public int winOrLoss() {
+	public String winOrLoss() {
 		Random random = new Random();
 		int value = random.nextInt(2);
 		if(value == 1) {
 			stake++;
+			return "won the game";
 		}else {
 			stake--;
+			return "lost the game";
 		}
-		return stake;
 	}
 	
 	public Integer resignStake(int day) {
@@ -80,9 +82,36 @@ public class GamblingSimulation {
 		System.out.println("The unluckiest day with minimum earnings: "+day_stake.get(0));
 	}
 	
+	public void continuePlaying() {
+		String result = winOrLoss();
+		Scanner sc = new Scanner(System.in);
+		if (result.contains("won"))
+		{
+			System.out.println("if you want to continue...Choose Y/N");
+			char res = sc.next().charAt(0);
+			if(res == ('Y' | 'y')) {
+				System.out.println("Continue for next month");
+				play();
+			}else if(res == ('N' | 'n')){
+				System.out.println("Thank you for playing");
+			}else {
+				System.out.println("Please enter right choice");
+			}
+		}
+	}
+	
+	public void play() {
+		winOrLoss();
+		resignStake(20);
+		getTotalAmountWonOrLoss();
+		calculateForMonth();
+		maximumMinimumEarnedDays();
+		continuePlaying();
+	}
+	
 	public static void main(String[] args) {
 		System.out.println("*****WELCOME TO GAMBLING SIMULATION PROBLEM*****");
 		GamblingSimulation gambling = new GamblingSimulation();
-		gambling.maximumMinimumEarnedDays();
+		gambling.play();
 	}
 }
