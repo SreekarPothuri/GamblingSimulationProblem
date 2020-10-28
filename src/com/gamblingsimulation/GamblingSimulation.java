@@ -69,9 +69,20 @@ public class GamblingSimulation {
         return totalAmountEarned;
     }
 	
+	public void maximumMinimumEarnedDays() {
+		ArrayList<Integer> day_stake = new ArrayList<Integer>();
+		for(int day=1;day<=20;day++) {
+            day_stake.add(resignStake(day));
+        }
+		Collections.sort(day_stake);
+		int size = day_stake.size();
+		System.out.println("The luckiest day with maximum earnings: "+day_stake.get(size-1));
+		System.out.println("The unluckiest day with minimum earnings: "+day_stake.get(0));
+	}
+	
 	public static void main(String[] args) {
 		System.out.println("*****WELCOME TO GAMBLING SIMULATION PROBLEM*****");
 		GamblingSimulation gambling = new GamblingSimulation();
-		gambling.calculateForMonth();
+		gambling.maximumMinimumEarnedDays();
 	}
 }
